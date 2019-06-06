@@ -1,2 +1,1 @@
-Python challenges from:
-https://www.practicepython.org/exercises/
+Python challenges from: [Practice Python](https://www.practicepython.org/exercises/)
