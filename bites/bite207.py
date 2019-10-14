@@ -14,9 +14,27 @@ def cached_property(func):
         if key not in cache:
             cache[key] = func(*args, **kwargs)
             return cache[key]
-        else:
-            return cache[key]
+        return cache[key]
     return _cached
+
+# Another way using a classes
+# https://docs.python.org/3.7/howto/descriptor.html#properties
+# https://docs.python.org/3.8/reference/datamodel.html#implementing-descriptors
+class cached_class:
+    """decorator used to cache expensive object attribute lookup"""
+    def __init__(self, fget):
+        self.fget = fget
+        self.cache = None
+        
+    def __get__(self, obj, objtype = None):
+        if self.cache is None:
+            self.cache = self.fget(obj)
+        return self.cache
+        
+    def __set__(self, obj, value):
+        raise AttributeError("Read Only: Can't set attribute")
+    
+cached_property = cached_class
 
 class Planet:
     """the nicest little orb this side of Orion's Belt"""
