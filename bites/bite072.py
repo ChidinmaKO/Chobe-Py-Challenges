@@ -6,7 +6,7 @@ belts = 'white yellow orange green blue brown black paneled red'.split()
 HONORS = OrderedDict(zip(scores, belts))
 MIN_SCORE, MAX_SCORE = min(scores), max(scores)
 
-
+# One way
 def get_belt(user_score: int):
     result = ''
     
@@ -20,7 +20,15 @@ def get_belt(user_score: int):
             result = v
     return result
 
-# using OrderedDict && Itertools
+# Another way using OrderedDict && Itertools
+def get_belt(user_score: int):
+    if user_score < MIN_SCORE:
+        return None
+    if user_score > MAX_SCORE:
+        return belts[-1]
+        
+    result = list(takewhile(lambda x: x[0] <= user_score, HONORS.items()))
+    return result[-1][1]
 
 
 # TESTS
